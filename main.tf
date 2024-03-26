@@ -338,7 +338,7 @@ resource "aws_glue_catalog_table" "tabela_spec" {
 }
 resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
   principal = var.producer_role_arn_mesh
-  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
+  permissions = ["SELECT"]
   table {
     database_name = var.database_spec
     name = var.tabela_spec
