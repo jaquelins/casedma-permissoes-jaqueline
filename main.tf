@@ -28,6 +28,7 @@ resource "aws_lakeformation_permissions" "database_permission_spec" {
     }
 }
 resource "aws_glue_catalog_table" "tabela_sor" {
+  depends_on = ["aws_lakeformation_permissions.database_permission_sor"]
   name            = var.tabela_sor
   database_name   = var.database_sor
   table_type      = "EXTERNAL_TABLE"
