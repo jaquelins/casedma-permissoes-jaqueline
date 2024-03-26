@@ -171,18 +171,7 @@ resource "aws_glue_catalog_table" "tabela_sor" {
         name           = "dt_carga"
         type           = "timestamp"
     }
-  }
 }
-resource "aws_lakeformation_permissions" "table_permissions_sor_producer" {
-  depends_on =["aws_glue_catalog_table.tabela_sor"]
-  principal = var.producer_role_arn_mesh
-  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
-  table {
-    database_name = var.database_sor
-    name = var.tabela_sor
-  }
-}
-
 
 ###Criação da tabela SOT###
 
@@ -312,27 +301,27 @@ resource "aws_glue_catalog_table" "tabela_spec" {
     }
 
     columns {
-      name = "cc_num"
+      name = "numero_cartao_credito_cliente"
       type = "string"
-      comment = "numero_cartao_credito_cliente"
+      comment = "cc_num"
     }
 
     columns {
-      name = "first_name"
+      name = "nome_cliente"
       type = "string"
-      comment = "nome_cliente"
+      comment = "first_name"
     }
 
     columns {
-      name = "last_name"
+      name = "sobrenome_cliente"
       type = "string"
-      comment = "sobrenome_cliente"
+      comment = "last_name"
     }
 
     columns {
-      name = "gender"
+      name = "genero_pessoa"
       type = "string"
-      comment = "genero_pessoa"
+      comment = "gender"
     }
 
     columns {
@@ -352,16 +341,14 @@ resource "aws_glue_catalog_table" "tabela_spec" {
       type = "int"
       comment = "qtd_transacoes"
     }
-  
-}
+
     columns {
       name = "dt_carga"
       type = "timestamp"
       comment = "dt_carga"
-}
+    }
+  }
   
-
-
 resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
 } 
   principal = var.producer_role_arn_mesh
