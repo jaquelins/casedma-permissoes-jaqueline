@@ -275,7 +275,7 @@ resource "aws_glue_catalog_table" "tabela_sot" {
     }
 }
 resource "aws_lakeformation_permissions" "table_permissions_sot_producer" {
-  depends_on =["aws_glue_catalog_table.tabela_sot"]
+}
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
@@ -310,7 +310,8 @@ resource "aws_glue_catalog_table" "tabela_spec" {
         "serialization.format" = "1"
       }
     }
-          columns {
+
+    columns {
       name = "cc_num"
       type = "string"
       comment = "numero_cartao_credito_cliente"
@@ -351,26 +352,22 @@ resource "aws_glue_catalog_table" "tabela_spec" {
       type = "int"
       comment = "qtd_transacoes"
     }
-
+  
+}
     columns {
       name = "dt_carga"
       type = "timestamp"
       comment = "dt_carga"
-    }
+}
+  
 
-    columns {
-      name = "anomes"
-      type = "int"
-      comment = "ano_mes_transacoes"
-    }
-  }
 
 resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
-  depends_on =["aws_glue_catalog_table.tabela_spec"]
+} 
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
     database_name = var.database_spec
     name = var.tabela_spec
   }
-}
+
