@@ -31,3 +31,6 @@ variable "tabela_spec" {
 variable "spec_s3_bucket" {
     type = string
 } 
+variable "consumer_role_arn_mesh" {
+    type = string
+}
