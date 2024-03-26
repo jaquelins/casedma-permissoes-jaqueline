@@ -173,3 +173,5 @@ resource "aws_glue_catalog_table" "tabela_sor" {
     }
   }
 }
+
+
