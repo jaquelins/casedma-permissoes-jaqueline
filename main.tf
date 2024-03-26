@@ -344,4 +344,5 @@ resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
     database_name = var.database_spec
     name = var.tabela_spec
   }
+  
 
