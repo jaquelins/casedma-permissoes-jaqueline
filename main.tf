@@ -179,7 +179,7 @@ resource "aws_glue_catalog_table" "tabela_sot" {
   name            = var.tabela_sot
   database_name   = var.database_sot
   table_type      = "EXTERNAL_TABLE"
-}
+
   parameters = {
     classification = "parquet"
   }
@@ -247,24 +247,11 @@ resource "aws_glue_catalog_table" "tabela_sot" {
         name = "dt_carga"
         type = "timestamp"
     }
-
-    columns {
-        name = "merch_lat"
-        type = "decimal(18, 3)"
-    }
-
-    columns {
-        name = "merch_long"
-        type = "decimal(18, 3)"
-    }
-
-    columns {
-        name = "is_fraud"
-        type = "int"
-    }
+  }
 }
+
 resource "aws_lakeformation_permissions" "table_permissions_sot_producer" {
-}
+
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
