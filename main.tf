@@ -171,6 +171,7 @@ resource "aws_glue_catalog_table" "tabela_sor" {
         name           = "dt_carga"
         type           = "timestamp"
     }
+  }
 }
 
 ###Criação da tabela SOT###
@@ -267,7 +268,7 @@ resource "aws_glue_catalog_table" "tabela_spec" {
   name            = var.tabela_spec
   database_name   = var.database_spec
   table_type      = "EXTERNAL_TABLE"
-}
+
   parameters = {
     classification = "parquet"
   }
@@ -335,14 +336,13 @@ resource "aws_glue_catalog_table" "tabela_spec" {
       comment = "dt_carga"
     }
   }
-  
+}
 resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
-} 
+
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
     database_name = var.database_spec
     name = var.tabela_spec
   }
-  
-
+}
