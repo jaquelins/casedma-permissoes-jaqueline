@@ -1,5 +1,6 @@
 control_account = "850202893763"
-producer_role_arn_mesh = "arn:aws:iam::850202893763:role/RoleProducerDMAjaqueline"
+#producer_role_arn_mesh = "arn:aws:iam::850202893763:role/RoleProducerDMAjaqueline"#
+producer_role_arn_mesh = "arn:aws:iam::850202893763:user/jaqueline_araujo"
 database_sor = "db_sor_banco_xis"
 database_sot = "db_sot_banco_xis"
 database_spec = "db_spec_banco_xis"
