@@ -183,3 +183,194 @@ resource "aws_lakeformation_permissions" "table_permissions_sor_producer" {
   }
 }
 
+
+###Criação da tabela SOT###
+
+resource "aws_glue_catalog_table" "tabela_sot" {
+  name            = var.tabela_sot
+  database_name   = var.database_sot
+  table_type      = "EXTERNAL_TABLE"
+}
+  parameters = {
+    classification = "parquet"
+  }
+  partition_keys {
+    name           = "anomes"
+    type           = "int"
+  }
+  storage_descriptor {
+    location       = "${var.sot_s3_bucket}/${var.tabela_sot}"
+    input_format   = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+    output_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+    ser_de_info {
+      name = var.tabela_sot
+      serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+      parameters = {
+        "serialization.format" = "1"
+      }
+    }
+        columns {
+        name = "id"
+        type = "int"
+    }
+
+    columns {
+        name = "trans_date_trans_time"
+        type = "timestamp"
+    }
+
+    columns {
+        name = "cc_num"
+        type = "string"
+    }
+
+    columns {
+        name = "category"
+        type = "string"
+    }
+
+    columns {
+        name = "amt"
+        type = "decimal(18,2)"
+    }
+
+    columns {
+        name = "first_name"
+        type = "string"
+    }
+
+    columns {
+        name = "last_name"
+        type = "string"
+    }
+
+    columns {
+        name = "gender"
+        type = "string"
+    }
+
+    columns {
+        name = "dob"
+        type = "date"
+    }
+
+    columns {
+        name = "dt_carga"
+        type = "timestamp"
+    }
+
+    columns {
+        name = "merch_lat"
+        type = "decimal(18, 3)"
+    }
+
+    columns {
+        name = "merch_long"
+        type = "decimal(18, 3)"
+    }
+
+    columns {
+        name = "is_fraud"
+        type = "int"
+    }
+}
+resource "aws_lakeformation_permissions" "table_permissions_sot_producer" {
+  depends_on =["aws_glue_catalog_table.tabela_sot"]
+  principal = var.producer_role_arn_mesh
+  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
+  table {
+    database_name = var.database_sot
+    name = var.tabela_sot
+  }
+}
+
+
+##Criação da tabela SPEC##
+
+resource "aws_glue_catalog_table" "tabela_spec" {
+  name            = var.tabela_spec
+  database_name   = var.database_spec
+  table_type      = "EXTERNAL_TABLE"
+}
+  parameters = {
+    classification = "parquet"
+  }
+  partition_keys {
+    name           = "ano_mes_transacoes"
+    type           = "int"
+  }
+  storage_descriptor {
+    location       = "${var.spec_s3_bucket}/${var.tabela_spec}"
+    input_format   = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+    output_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+    ser_de_info {
+      name = var.tabela_spec
+      serialization_library = "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+      parameters = {
+        "serialization.format" = "1"
+      }
+    }
+          columns {
+      name = "cc_num"
+      type = "string"
+      comment = "numero_cartao_credito_cliente"
+    }
+
+    columns {
+      name = "first_name"
+      type = "string"
+      comment = "nome_cliente"
+    }
+
+    columns {
+      name = "last_name"
+      type = "string"
+      comment = "sobrenome_cliente"
+    }
+
+    columns {
+      name = "gender"
+      type = "string"
+      comment = "genero_pessoa"
+    }
+
+    columns {
+      name = "idade_cliente"
+      type = "int"
+      comment = "idade_cliente"
+    }
+
+    columns {
+      name = "soma_valor_transacoes"
+      type = "decimal(18, 2)"
+      comment = "soma_valor_transacoes"
+    }
+
+    columns {
+      name = "qtd_transacoes"
+      type = "int"
+      comment = "qtd_transacoes"
+    }
+
+    columns {
+      name = "dt_carga"
+      type = "timestamp"
+      comment = "dt_carga"
+    }
+
+    columns {
+      name = "anomes"
+      type = "int"
+      comment = "ano_mes_transacoes"
+    }
+  }
+
+resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
+  depends_on =["aws_glue_catalog_table.tabela_spec"]
+  principal = var.producer_role_arn_mesh
+  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
+  table {
+    database_name = var.database_spec
+    name = var.tabela_spec
+  }
+}
