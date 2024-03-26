@@ -3,3 +3,5 @@ producer_role_arn_mesh = "arn:aws:iam::850202893763:role/RoleProducerDMAjaquelin
 database_sor = "db_sor_banco_xis"
 database_sot = "db_sot_banco_xis"
 database_spec = "db_spec_banco_xis"
+tabela_sor = "produto_credito_sor_jaqueline"
+sor_s3_bucket = "s3://corp-sor-sa-east-1-850202893763"
