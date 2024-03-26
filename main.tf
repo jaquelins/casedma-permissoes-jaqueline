@@ -173,5 +173,13 @@ resource "aws_glue_catalog_table" "tabela_sor" {
     }
   }
 }
-
+resource "aws_lakeformation_permissions" "table_permissions_sor_producer" {
+  depends_on =["aws_glue_catalog_table.tabela_sor"]
+  principal = var.producer_role_arn_mesh
+  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
+  table {
+    database_name = var.database_sor
+    name = var.tabela_sor
+  }
+}
 
