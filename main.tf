@@ -252,7 +252,6 @@ resource "aws_glue_catalog_table" "tabela_sot" {
 }
 
 resource "aws_lakeformation_permissions" "table_permissions_sot_producer" {
-
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
@@ -338,7 +337,6 @@ resource "aws_glue_catalog_table" "tabela_spec" {
   }
 }
 resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
-
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
