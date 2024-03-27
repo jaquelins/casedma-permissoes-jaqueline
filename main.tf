@@ -79,7 +79,7 @@ resource "aws_glue_catalog_table" "tabela_sor" {
  
     columns {
         name           = "amt"
-        type           = "decimal(18, 2)"
+        type           = "decimal(18,2)"
     }
  
     columns {
@@ -119,12 +119,12 @@ resource "aws_glue_catalog_table" "tabela_sor" {
  
     columns {
         name           = "lat"
-        type           = "decimal(18, 3)"
+        type           = "decimal(18,3)"
     }
  
     columns {
         name           = "long"
-        type           = "decimal(18, 3)"
+        type           = "decimal(18,3)"
     }
  
     columns {
@@ -154,12 +154,12 @@ resource "aws_glue_catalog_table" "tabela_sor" {
  
     columns {
         name           = "merch_lat"
-        type           = "decimal(18, 3)"
+        type           = "decimal(18,3)"
     }
  
     columns {
         name           = "merch_long"
-        type           = "decimal(18, 3)"
+        type           = "decimal(18,3)"
     }
  
     columns {
@@ -171,6 +171,14 @@ resource "aws_glue_catalog_table" "tabela_sor" {
         name           = "dt_carga"
         type           = "timestamp"
     }
+  }
+}
+resource "aws_lakeformation_permissions" "table_permissions_sor_producer" {
+  principal = var.producer_role_arn_mesh
+  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
+  table {
+    database_name = var.database_sor
+    name = var.tabela_sor
   }
 }
 
@@ -337,9 +345,8 @@ resource "aws_glue_catalog_table" "tabela_spec" {
   }
 }
 resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
-  depends_on =["aws_glue_catalog_table.tabela_spec"]
-  principal = var.consumer_role_arn_mesh
-  permissions = ["SELECT"]
+  principal = var.producer_role_arn_mesh
+  permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
     database_name = var.database_spec
     name = var.tabela_spec
