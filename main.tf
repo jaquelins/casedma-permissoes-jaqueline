@@ -344,11 +344,20 @@ resource "aws_glue_catalog_table" "tabela_spec" {
     }
   }
 }
-resource "aws_lakeformation_permissions" "table_permissions_sot_producer" {
+resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
   principal = var.producer_role_arn_mesh
   permissions = ["SELECT", "INSERT", "ALTER", "DROP"]
   table {
-    database_name = var.database_sot
-    name = var.tabela_sot
+    database_name = var.database_spec
+    name = var.tabela_spec
+  }
+}
+resource "aws_lakeformation_permissions" "table_permissions_spec_producer" {
+  depends_on =["aws_glue_catalog_table.tabela_spec"]
+  principal = var.consumer_role_arn_mesh
+  permissions = ["SELECT"]
+  table {
+    database_name = var.database_spec
+    name = var.tabela_spec
   }
 }
