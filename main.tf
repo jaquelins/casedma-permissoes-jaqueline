@@ -327,7 +327,7 @@ resource "aws_glue_catalog_table" "tabela_spec" {
 
     columns {
       name = "soma_valor_transacoes"
-      type = "decimal(18, 2)"
+      type = "decimal(18,2)"
       comment = "soma_valor_transacoes"
     }
 
